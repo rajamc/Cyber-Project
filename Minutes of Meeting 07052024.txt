@@ -1,0 +1,28 @@
+Minutes of Meeting 07/05/2024
+Participants:
+Steve, Raja, Isaac and Josh K
+Discussed about the documentation of scope and project plan. Steve advised what to be filled in procurement and tracking in the monthly report.
+He also guided what details to enter in summary. Progress of each team member, task completed ,issues faced and the task planned ahead were discussed.
+Isaac - working on Fleet Server
+Raja -Issues with Elastic search, Kibana.
+Josh K working on windows client and Server.
+Steve advised all team members to have continuous interaction and if any of the member couldn't attend class in person should join the meeting or work remotely.
+
+
+Minutes of Meeting 10/05/2024
+Participants:
+Steve, Raja, Isaac and Josh P.
+Discussed about the issues had in the week for the team members
+Raja - Unable to log in to host with IP address but able to login with hostname
+Isaac: Issues with Windows Server and Domain Controller
+Josh P : No issues
+Josh K : Medical appointment
+Discussed about the Trello Board progress and noted the issues of Raja and Isaac and what is planned for the team were entered in Trello.
+Submitted the 1st Monthly report and details of project deliverables, Out of scope were discussed
+
+
+
+ 
+
+
+
