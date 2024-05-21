@@ -27,4 +27,8 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * SW1(config-if)# ip address 192.168.100.254 255.255.255.0
 * SW1(config-if)# no shutdown
 ### to SSH use SSH protocol 1
-  
+
+## Domain Controller Configuration
+* Configured server as Domain Controller
+* Added 4 users with usernames and passwords for each member of team
+* Created a user group and added the members to that group
