@@ -32,3 +32,4 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * Configured server as Domain Controller
 * Added 4 users with usernames and passwords for each member of team
 * Created a user group and added the members to that group
+* Added Clients to Domain
