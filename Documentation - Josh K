@@ -26,10 +26,10 @@ Kali Purple installation for SIEM
 
   Checked connectivity:
 
-  ```
+  ~~~
   ip a  (DHCP assigned IP because currently connected to e.208 network for updates)
   ping 8.8.8.8
-  ```
+  ~~~
 
   Downloaded and installed updates:
 
