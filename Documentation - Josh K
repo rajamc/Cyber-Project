@@ -37,3 +37,6 @@ Kali Purple installation for SIEM
 
   ```
   sudo apt update && sudo apt upgrade -y
+  ```
+
+
