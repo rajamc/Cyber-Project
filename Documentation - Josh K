@@ -1,1 +1,37 @@
+Kali Purple installation for SIEM
 
+  Attatched Kali Purple iso to VirtualBox (kali-linux-2023.4-installer-purple-amd64.iso)
+  Installed onto SSD as with Debian 11 bullseye 64-bit with 16384MB RAM and 4 cores with 50GB of storage.
+  Set Adapter 1 it NAT Networking to download updates for installation.
+
+  Followed Graphical setup/install
+  
+  Hostname: PurplePrototype (cloned the prototype VM to production)
+    Domain: (blank)
+    Username: zoey
+    Password: Password1
+  
+  Disk partition:
+    used entire disk
+    all files installed on one partition
+    wrote changes to disk
+    Partition disks: yes
+
+  Software selection:
+    accepted defaults
+    install grub -y
+    on /dev/sda
+
+  rebooted and logged in
+
+  Checked connectivity:
+
+  ```
+  ip a  (DHCP assigned IP because currently connected to e.208 network for updates)
+  ping 8.8.8.8
+  ```
+
+  Downloaded and installed updates:
+
+  ```
+  sudo apt update && sudo apt upgrade -y
