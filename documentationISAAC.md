@@ -45,3 +45,9 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * Added 4 users with usernames and passwords for each member of team
 * Created a user group and added the members to that group
 * Added Clients to Domain
+
+#### Set domain group policy 
+* Tools > Local Security Policy > Account Policies
+*
+*
+*
