@@ -47,7 +47,7 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * Added Clients to Domain
 
 #### Set domain group policy 
-* Tools > Local Security Policy > Account Policies
-*
+* Open "Group Policy Manager" 
+* 
 *
 *
