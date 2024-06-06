@@ -38,6 +38,15 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * SW1(config)# interface vlan1
 * SW1(config-if)# ip address 192.168.100.254 255.255.255.0
 * SW1(config-if)# no shutdown
+* SW1(config)#interface g1/0/3
+* SW1(config-if)#switchport port-security
+* SW1(config-if)#switchport port-security maximum 1
+* SW1(config-if)#switchport port-security mac-address sticky
+* SW1(config-if)#switchport port-security violation restrict
+* SW1(config)#interface range g1/0/1, g1/0/2, g1/0/4 - 36, g1/0/1
+* SW1(config-if-range)# shutdown
+
+
 ### to SSH use SSH protocol 1
 
 ## Domain Controller Configuration
