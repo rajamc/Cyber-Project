@@ -48,6 +48,11 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 
 #### Set domain group policy 
 * Open "Group Policy Manager" 
-* 
-*
-*
+* Expand Forest:project.production > Domains > project.production > Group Policy Objects
+* Right click and edit Default Domain Policy
+* Expand Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy
+* Enforce password history: 24 passwords remembered
+* Max password age: 90 days
+* Min password age: 1 day
+* Min password length: 10
+* Meet complexity requirments Enabled
