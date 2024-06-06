@@ -32,5 +32,5 @@ Open command prompt
 * ping 192.168.100.1
 * ping 192.168.108.1
 * ping 8.8.8.8<br>
-In a web browser connect to 192.168.100.1 to test firewall gui connectivity.
+* In a web browser connect to 192.168.100.1 to test firewall gui / connectivity.
 
