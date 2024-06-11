@@ -45,6 +45,14 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * SW1(config-if)#switchport port-security violation restrict
 * SW1(config)#interface range g1/0/1, g1/0/2, g1/0/4 - 36, g1/0/1
 * SW1(config-if-range)# shutdown
+* SW1(config)#service timestamps log datetime
+* SW1(config)#service sequence-numbers
+* SW1(config)#logging 192.168.100.200
+* SW1(config)#logging trap 4
+* SW1(config)#logging facility auth
+* SW1(config)#ntp server 139.180.160.82
+* SW1(config)#clock timezone AEST +10
+
 
 
 ### to SSH use SSH protocol 1
