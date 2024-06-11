@@ -23,7 +23,7 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 ##Switch Configureation
 "Note Issues with port 17 perhaps"
 * Switch(config)#hostname SW1
-* SW1(config)# enable secret Password1
+* SW1(config)# enable secret class
 * SW1(config)# banner motd $Unauthorised access is strictly prohibited.$
 * SW1(config)#service password-encryption
 * SW1(config)#username ProdAdmin secret Password1
