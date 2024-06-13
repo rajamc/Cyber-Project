@@ -52,6 +52,10 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * SW1(config)#logging facility auth
 * SW1(config)#ntp server 139.180.160.82
 * SW1(config)#clock timezone AEST +10
+* SW1(config)#interface G0/0/X
+* SW1(config-if)#switchport mode access
+* SW1(config-if)#switchport port-security violation shutdown
+
 
 
 
