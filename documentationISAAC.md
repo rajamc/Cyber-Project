@@ -58,6 +58,9 @@ A backup config was created using InitialNetworkConfig15-05-2024.
 * SW1(config-if)#interface range g1/0/37 - 48
 * SW1(config-if-range)#switchport mode access
 * SW1(config-if-range)#switchport port-security violation restrict
+* SW1(config-if-range)#exit
+* SW1(config)#login on-failure
+* SW1(config)#login on-success
 
 
 
