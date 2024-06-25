@@ -17,7 +17,7 @@ Run the newly installed Windows 10 virtual machine
 * Install the standard desktop experience
 * When prompted, select no internet connection
 * Continue without a Microsoft account
-#### Configure IPV4 ethernet adaptor:
+#### Configure IPV4 ethernet adapter:
 * IP Address - 192.168.100.20/24
 * Gateway - 192.168.100.1
 * DNS - 192.168.100.100 / 8.8.8.8
@@ -32,5 +32,26 @@ Open command prompt
 * ping 192.168.100.1
 * ping 192.168.108.1
 * ping 8.8.8.8<br>
-* In a web browser connect to 192.168.100.1 to test firewall gui / connectivity.
-
+* In a web browser connect to 192.168.100.1 to test firewall gui / connectivity.<br>
+## Windows Server 22 Installation and DC promotion
+## Creating Windows Server in Virtual Box:
+* With Virtual Box manager open, click Machine > New...
+* Attach Windows Server 22 iso
+* Install on to portable SSD
+* Skip unattended install
+#### Hardware:
+* Set Base Memory to 4GB
+* Processors set to 2
+#### Virtual Hard Disk:
+* Create Virtual Hard Disk - Size 50GB
+* Press next and then finish.
+* Note - Make sure installation is desktop experience and finish installation with no internet/microsoft account.
+#### Configure IPV4 ethernet adapter:
+* IP Address - 192.168.100.100/24
+* Gateway - 192.168.100.1
+* DNS - 127.0.0.1, 8.8.8.8
+#### Promote server to Domain controller:
+* Name the server using your initials - eg. jp
+* hostname: initialsserver eg. jpserver
+* domain: initials.local - eg. jp.local
+* IMPORTANT - Change the hostname before promoting to a DC.
