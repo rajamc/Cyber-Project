@@ -54,4 +54,44 @@ Open command prompt
 * Name the server using your initials - eg. jp
 * hostname: initialsserver eg. jpserver
 * domain: initials.local - eg. jp.local
-* IMPORTANT - Change the hostname before promoting to a DC.
+* IMPORTANT - Change the hostname before promoting to a DC.<br>
+## OPNSENSE Firewall Installation and Configuration:<br>
+## Opnsense Firewall in Virtual Box
+* With Virtual Box manager open, click Machine > New...
+* ISO Image: OPNsense.iso
+* Type: BSD
+* Version: FreeBSD (64-bit)
+#### Hardware:
+* Set Base Memory to 4GB
+* Processors set to 2
+#### Virtual Hard Disk:
+* Create Virtual Hard Disk - Size 20GB
+* Press next and then finish.
+#### Network:
+* Add 2 network adapters cards
+* Network > Adapter 1 - Attached to Internal network = LAN
+* Network > Adapter 2 - Enable , Attached to Bridged Adapter - Ethernet card on PC (or WIFI) = WAN
+* Note: Adapter 1 will be allocated to em0 , Adapter 2 will be allocated to em1 - in OPNsense
+#### Finalising Installation:
+* Start OPNsense VM
+* Login as: installer
+* Password: opnsense
+* Accept defaults
+* Copy files to disk partition select VBOX HARDDISK 10 (20 GB) with down arrow , enter for OK
+* Yes to destroy disk contents , left arrow and enter
+* Files will be copied from the iso to the VDI file
+* Enter root as user, password: opnsense, confirm password, complete installation and reboot.
+#### Conifguring OPNsense Firewall:
+#### Set up DHCP on LAN interface em0
+* Login as root, password opnsense.
+* Enter an option: 2 (set interface IP address)
+* Enter the number of interface to configure: 1 - LAN (em0)
+* Configure IPv4 address LAN interface via DHCP: N
+* Enter the New LAN IPv4 Address: 192.168.100.1
+* Enter the New LAN IPv4 subnet bit count (1 to 32): 24
+* Configure IPv6...: y
+* Do you want to enable the DHCP server on LAN: y
+* Enter the start address: 192.168.100.40
+* Enter the end address: 192.168.100.49
+* Do you want to change the web GUI protocol from HTTPS to HTTP? : y
+* Restore web GUI access defaults: y
