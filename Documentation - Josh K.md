@@ -1,7 +1,7 @@
 Kali Purple installation for SIEM
 
   Attatched Kali Purple iso to VirtualBox (kali-linux-2023.4-installer-purple-amd64.iso)
-  Installed onto SSD as with Debian 11 bullseye 64-bit with 16384MB RAM and 4 cores with 50GB of storage.
+  Installed onto SSD as with Debian 11 bullseye 64-bit with 20064MB RAM and 4 cores with 50GB of storage.
   Set Adapter 1 it NAT Networking to download updates for installation.
 
   Followed Graphical setup/install
@@ -45,5 +45,27 @@ Kali Purple installation for SIEM
     eth0
     IPv4 settings
     IP: 192.168.100.200/24
+
+
     Gateway: 192.168.100.1
     DNS Servers: 8.8.8.8
+
+
+    restart machine to refresh eth0
+
+  Testing connectivity on Kali Purple
+
+    ```
+    ip a   
+    ping 192.168.100.1  
+    ping 192.168.108.1  
+    ping 8.8.8.8
+    ```
+
+  Testing PaloAlto Firewall is accessable
+
+    ```
+    Navigate to https://192.168.100.1 on Firefox
+    log in with username: admin    (Requires Management profile on Eth1/2 (The interface that goes to LAN))
+                password: Password1
+    
