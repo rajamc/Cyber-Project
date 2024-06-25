@@ -88,6 +88,8 @@ Testing connectivity on Kali Purple
 ```
   sudo apt update && sudo apt upgrade 
   sudo bash -c "export HOSTNAME=kali-purple.kali.purple; apt-get install elasticsearch -y"
+
+  Generated Superuser Password: zvTy6gUPonVCKwbNduFY 
 ```
 &nbsp;&nbsp;&nbsp;Single-node setup
 ```
@@ -112,3 +114,43 @@ Testing connectivity on Kali Purple
   ff02::1 ip6-allnodes
   ff02::2 ip6-allrouters
 ```
+&nbsp;&nbsp;&nbsp;&nbsp;Installing Kibana + generating encryption keys
+```
+  sudo apt install kibana  
+  sudo /usr/share/kibana/bin/kibana-encryption-keys generate –q
+  
+  Encryption keys: xpack.encryptedSavedObjects.encryptionKey: 39ad9b931ff617316623e780f300ae00
+                   xpack.reporting.encryptionKey: 0e90a402d329e27cab63545a03bad871
+                   xpack.security.encryptionKey: c1b5e7f0732a0b4783e2abe85fd67b44
+
+  echo "server.host: \"kali-purple.kali.purple\"" | sudo tee -a /etc/kibana/kibana.yml 
+  sudo systemctl enable elasticsearch kibana --now
+```
+
+**Enrolling Kibana**
+&nbsp;&nbsp;Verify Kibana is running
+```
+  systemctl status kibana 
+  systemctl status elasticsearch
+```
+&nbsp;&nbsp;Generate enrolement token
+```
+  sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+  Enrollment-token: eyJ2ZXIiOiI4LjEzLjMiLCJhZHIiOlsiMTkyLjE2OC4xMDAuMjAwOjkyMDAiXSwiZmdyIjoiYjkzYzY3MDllMjY0ZDFlNWY2ZGU5MmZjNzg3ZjQxMWY1YWVkNzFhZmYxZDY0N2M4MjMzZjI0MDI4NGFlMTcyMCIsImtleSI6IkVzSDVPNDhCOUx2cXBNMXlWalFrOnNhTG1LMENmUW4yaGJDZUVmYnpHaFEifQ==
+```
+&nbsp;&nbsp;&nbsp;&nbsp;Navigate to http://192.168.100.200:5601 and paste the enrollment token > press "Configure Elastic"
+
+&nbsp;&nbsp;Generate a verification code
+```
+ sudo /usr/share/kibana/bin/kibana-verification-code
+```
+&nbsp;&nbsp;&nbsp;&nbsp;enter verification code into elastic GUI in browser
+&nbsp;&nbsp;&nbsp;&nbsp;press verify
+
+&nbsp;&nbsp;&nbsp;&nbsp;Login as:
+&nbsp;&nbsp;&nbsp;&nbsp;username: elastic
+&nbsp;&nbsp;&nbsp;&nbsp;Password: zvTy6gUPonVCKwbNduFY
+
+&nbsp;&nbsp;&nbsp;&nbsp;Enrollment and login to Kibana is successful
+
+UP TO 4.5 DO THIS TOMORROW ZOEY
