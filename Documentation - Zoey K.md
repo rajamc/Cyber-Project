@@ -128,6 +128,7 @@ Testing connectivity on Kali Purple
 ```
 
 **Enrolling Kibana**
+
 &nbsp;&nbsp;Verify Kibana is running
 ```
   systemctl status kibana 
@@ -145,12 +146,68 @@ Testing connectivity on Kali Purple
  sudo /usr/share/kibana/bin/kibana-verification-code
 ```
 &nbsp;&nbsp;&nbsp;&nbsp;enter verification code into elastic GUI in browser
+
 &nbsp;&nbsp;&nbsp;&nbsp;press verify
 
 &nbsp;&nbsp;&nbsp;&nbsp;Login as:
+
 &nbsp;&nbsp;&nbsp;&nbsp;username: elastic
+
 &nbsp;&nbsp;&nbsp;&nbsp;Password: zvTy6gUPonVCKwbNduFY
 
 &nbsp;&nbsp;&nbsp;&nbsp;Enrollment and login to Kibana is successful
 
-UP TO 4.5 DO THIS TOMORROW ZOEY
+**Enable HTTPS for Kibana**
+
+&nbsp;&nbsp;Generate required certificates and keys
+
+&nbsp;&nbsp;commands needed:
+```
+  sudo /usr/share/elasticsearch/bin/elasticsearch-certutil ca 
+  sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert --ca elastic-stack-ca.p12 --dns kali-purple.kali.purple,kali-purple.kali.purple,siem --out kibana-server.p12 
+  sudo openssl pkcs12 -in /usr/share/elasticsearch/elastic-stack-ca.p12 -clcerts -nokeys -out /etc/kibana/kibana-server_ca.crt 
+  sudo openssl pkcs12 -in /usr/share/elasticsearch/kibana-server.p12 -out /etc/kibana/kibana-server.crt -clcerts -nokeys 
+  sudo openssl pkcs12 -in /usr/share/elasticsearch/kibana-server.p12 -out /etc/kibana/kibana-server.key -nocerts -nodes 
+  sudo chown root:kibana /etc/kibana/kibana-server_ca.crt 
+  sudo chown root:kibana /etc/kibana/kibana-server.key 
+  sudo chown root:kibana /etc/kibana/kibana-server.crt 
+  sudo chmod 660 /etc/kibana/kibana-server_ca.crt 
+  sudo chmod 660 /etc/kibana/kibana-server.key 
+  sudo chmod 660 /etc/kibana/kibana-server.crt 
+   
+  echo "server.ssl.enabled: true" | sudo tee -a /etc/kibana/kibana.yml 
+  echo "server.ssl.certificate: /etc/kibana/kibana-server.crt" | sudo tee -a /etc/kibana/kibana.yml 
+  echo "server.ssl.key: /etc/kibana/kibana-server.key" | sudo tee -a /etc/kibana/kibana.yml 
+  echo "server.publicBaseUrl: \"https://kali-purple.kali.purple:5601\"" | sudo tee -a /etc/kibana/kibana.yml 
+
+```
+
+&nbsp;&nbsp;Copy encryption keys into /etc/kibana/kibana.yml that were generated earlier
+
+```
+  sudo nano /etc/kibana/kibana.yml
+  copy the prior generated keys to the bottom of file
+  sudo systemctl restart kibana
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; To log into Kibana open browser and navigate to https://192.168.100.200:5601
+
+&nbsp;&nbsp;&nbsp;&nbsp;Log in information:
+
+&nbsp;&nbsp;&nbsp;&nbsp;Username: elastic
+
+&nbsp;&nbsp;&nbsp;&nbsp;Password: zvTy6gUPonVCKwbNduFY
+
+&nbsp;&nbsp;Creating an elastic user account
+
+&nbsp;&nbsp;&nbsp;&nbsp; Management > Stack Management > Users > Create user
+
+&nbsp;&nbsp;&nbsp;&nbsp;Username: zoey
+
+&nbsp;&nbsp;&nbsp;&nbsp;Password: Password1
+
+&nbsp;&nbsp;&nbsp;&nbsp;Priveleges: superuser
+
+&nbsp;&nbsp;&nbsp;&nbsp;Create user
+
+**UP TO NUMBER 5**
