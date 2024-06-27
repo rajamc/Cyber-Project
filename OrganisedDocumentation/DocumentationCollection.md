@@ -11,4 +11,21 @@ The network will be set up and configured to use the following devices:
 * OPENsense Firewall (Virtual Prototype)
 * Palo Alto Firewall (Physical Production Prototype)
 * Ubuntu DMZ Web Server
+ 
+Testing will then take place to ensure that the network is secure.
 
+The Initial prototype will use OPNsense for the firewall, while the production prototype will use Palo Alto.
+
+### 1.0 IP adresses
+- KaliPurple                        192.168.100.200
+- Windows 22 DC                     192.168.100.100
+- DHCP Clients                      192.168.100.50-70
+- Internal Management (Windows)     192.169.100.11-17
+- Kali Inside                       (DHCP)
+- Switch VLAN1                      192.168.100.254
+- Palo Fw E1/2                      192.168.100.1
+- Palo Fw E1/1                      192.168.108.235
+- Palo Fw E1/3                      192.168.50.1
+- DMZ Web Server                    192.168.50.100
+- Kali Outside                      192.168.108.116 
+ 
