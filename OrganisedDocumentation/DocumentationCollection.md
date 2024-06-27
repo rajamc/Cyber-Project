@@ -193,6 +193,21 @@ If there are problems with devices connecting to switch, change the port it is c
 
 ## Firewall Configuration
 
+Configure firewall management interface
+Settup DNS for internet access in service routes, then settup dynamic updates.
+Downloaded updates then installed the updates for antivirus and Application & threats
+### Configure DHCP on firewall
+* Network>DHCP> add
+#### LEASE:
+* interface eth1/2 mode auto
+* IP pool 192.168.100.50-192.168.100.70
+#### OPTIONS:
+* Gateway: 192.168.100.1
+* Subnet Mask: 255.255.255.0
+* primary DNS: windows server (192.168.100.100)
+* Secondary DNS: 8.8.8.8
+* press > OK > Commit changes
+
 ### Configuring Network Interfaces:
 Network > Interfaces:
 * Ethernet 1/1
