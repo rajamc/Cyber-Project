@@ -239,6 +239,81 @@ Network > Network Profiles > Interface Mgmt > Add
 
 ![image](https://github.com/rajamc/Cyber-Project/assets/163961365/0082539b-a61a-4f8a-940a-ffbaf19d2c5d)
 
+### Configure Security Zones:
+Network > Zones > Add:
+* Name: WAN
+ * Type: Layer3
+	* Interfaces: ethernet1/1
+	* \> OK > Add:
+* Name: LAN
+	* Type: Layer3
+	* User Identification ACL: Tick box next to Enable User Identification
+	* Interfaces: ethernet1/2
+	* \> OK > Add:
+* Name: DMZ
+	* Type: Layer3
+	* Interfaces: ethernet1/3
+
+![image](https://github.com/rajamc/Cyber-Project/assets/163961365/7ff3b775-fd87-436c-9ac4-d7c80fe54e22)
+
+### Create Tags for each Zone
+```
+Objects > Tags > Add: x3
+	Name: DMZ 		Colour: Orange
+	Name: WAN 		Colour: Black
+	Name: LAN		Colour: Green
+```
+![image](https://github.com/rajamc/Cyber-Project/assets/163961365/22a37583-a54e-4601-9a19-0eaeedd53c7a)
+
+
+### Create NAT Policies
+Policies > Nat > Add: <br>
+&nbsp; \> General<br>
+&nbsp;&nbsp;&nbsp; Name: Internet_access_to_LAN<br>
+&nbsp;&nbsp;&nbsp; Description: Translates traffic from LAN to WAN<br>
+&nbsp;&nbsp;&nbsp; Tags: LAN<br>
+&nbsp; \> Original Packet<br>
+&nbsp;&nbsp;&nbsp; Source Zone: LAN<br>
+&nbsp;&nbsp;&nbsp; Destination Zone: WAN<br>
+&nbsp;&nbsp;&nbsp; Interface: ethernet1/1<br>
+&nbsp;&nbsp;&nbsp; Any source and destination address<br>
+&nbsp; \> Translated Packet > Source Address Translation:<br>
+&nbsp;&nbsp;&nbsp; Translation Type: Dynamic IP And Port<br>
+&nbsp;&nbsp;&nbsp; Address Type: Interface Address<br>
+&nbsp;&nbsp;&nbsp; Interface: ethernet1/1<br>
+&nbsp;&nbsp;&nbsp; IP address 192.168.108.235/24<br>
+&nbsp; \> OK<br>
+Add:<br>
+&nbsp; \> General<br>
+&nbsp;&nbsp;&nbsp; Name: Internet_access_to_DMZ<br>
+&nbsp;&nbsp;&nbsp; Description: Translates traffic from DMZ to WAN<br>
+&nbsp;&nbsp;&nbsp; Tags: DMZ<br>
+&nbsp; \> Original Packet<br>
+&nbsp;&nbsp;&nbsp; Source Zone: DMZ<br>
+&nbsp;&nbsp;&nbsp;	Destination Zone: WAN<br>
+&nbsp;&nbsp;&nbsp;	Interface: ethernet1/1<br>
+&nbsp;&nbsp;&nbsp;	Any source and destination address<br>
+&nbsp;	\> Translated Packet > Source Address Translation:<br>
+&nbsp;&nbsp;&nbsp;	Translation Type: Dynamic IP And Port<br>
+&nbsp;&nbsp;&nbsp;	Address Type: Interface Address<br>
+&nbsp;&nbsp;&nbsp;	Interface: ethernet1/1<br>
+&nbsp;&nbsp;&nbsp;	IP address 192.168.108.235/24<br>
+&nbsp;	\> OK<br>
+Add:<br>
+&nbsp; \> General<br>
+&nbsp;&nbsp;&nbsp;	Name: dstNat-WAN-to-DMZ<br>
+&nbsp;&nbsp;&nbsp;	Description: Allow internet traffic to the DMZ using the IP: 192.168.108.135<br>
+&nbsp;	\> Original Packet<br>
+&nbsp;&nbsp;&nbsp;	Source Zone: WAN<br>
+&nbsp;&nbsp;&nbsp;	Destination Zone: WAN<br>
+&nbsp;&nbsp;&nbsp;	Interface: any<br>
+&nbsp;&nbsp;&nbsp;	Any source address <br>
+&nbsp;&nbsp;&nbsp;	Destination address: 192.168.108.125<br>
+&nbsp;	\> Translated Packet > Destination Address Translation:<br>
+&nbsp;&nbsp;&nbsp;	Translation Type: Static IP<br>
+&nbsp;&nbsp;&nbsp;	Translated Address: 192.168.50.100<br>
+&nbsp;	\> OK<br>
+
 
 
 
