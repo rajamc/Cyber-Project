@@ -210,4 +210,145 @@ Testing connectivity on Kali Purple
 
 &nbsp;&nbsp;&nbsp;&nbsp;Create user
 
-**UP TO NUMBER 5**
+**Fleet Server Installation**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Before doing anything run
+```
+  sudo apt update && sudo apt upgrade -y
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After that's done:
+
+&nbsp;&nbsp;&nbsp;&nbsp;Open Firefox > Navigate to Kibana > Fleet > Add Fleet server
+
+&nbsp;&nbsp;&nbsp;&nbsp;Name: Fleet server policy
+
+&nbsp;&nbsp;&nbsp;&nbsp;URL: https://192.168.100.200:5601
+
+&nbsp;&nbsp;&nbsp;&nbsp;Press: - Generate Fleet server policy button
+
+&nbsp;&nbsp;Install fleet server to central host
+
+&nbsp;&nbsp;&nbsp;&nbsp;copy the command generated into a terminal window 
+```
+(example)
+curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.X.X-linux-x86_64.tar.gz
+tar xzvf elastic-agent-8.X.X-linux-x86_64.tar.gz
+cd elastic-agent-8.7.0-linux-x86_64
+sudo ./elastic-agent install \ --fleet-server-es=https://192.168.100.200:9200 \ --fleet-server-service-token= eyJ2ZXIiOiI4LjEzLjMiLCJhZHIiOlsiMTkyLjE2OC4xMDAuMjAwOjkyMDAiXSwiZmdyIjoiYjkzYzY3MDllMjY0ZDFlNWY2ZGU5MmZjNzg3ZjQxMWY1YWVkNzFhZmYxZDY0N2M4MjMzZjI0MDI4NGFlMTcyMCIsImtleSI6IkVzSDVPNDhCOUx2cXBNMXlWalFrOnNhTG1LMENmUW4yaGJDZUVmYnpHaFEifQ==
+```
+&nbsp;&nbsp;&nbsp;&nbsp;Wait until files are copied, extracted, and elastic agent is installed and connection has been confirmed, then type "y" to run it as a service, it should then display :Elastic Agent has been successfully installed.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Fleet will then display: Fleet server connected
+
+&nbsp;&nbsp;&nbsp;&nbsp;Press: Continue enrolling Elastic Agent button
+
+&nbsp;&nbsp;&nbsp;&nbsp;Browse to Elastic: Fleet > Agents 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Make sure it say's Agent is Healthy
+
+&nbsp;&nbsp;Adding Elastic Defend and Windows agents
+
+&nbsp;&nbsp;&nbsp;&nbsp;Go to: Management > Integration > add security integrations
+
+&nbsp;&nbsp;&nbsp;&nbsp;select and add Elastic Defend
+
+&nbsp;&nbsp;&nbsp;&nbsp;Integration name: Windows defend
+
+&nbsp;&nbsp;&nbsp;&nbsp;select: traditional endproints, Next gen antivirus
+
+&nbsp;&nbsp;Where to add this integration
+
+&nbsp;&nbsp;&nbsp;&nbsp;New Hosts - create agent policy
+
+&nbsp;&nbsp;&nbsp;&nbsp;New agent policy name: Windows defend policy
+
+&nbsp;&nbsp;&nbsp;&nbsp;Make sure "Collect system logs and metrics" is selected
+
+&nbsp;&nbsp;&nbsp;&nbsp;Save and continue
+
+&nbsp;&nbsp;&nbsp;&nbsp;Add elastic agent to your Host
+
+&nbsp;&nbsp;&nbsp;&nbsp;Select Windows enrollment token for powershell script (For the DMZ server enrollment, select Linux Tar script instead)
+
+&nbsp;&nbsp;Installing Elastic Agent on Windows host
+
+&nbsp;&nbsp;&nbsp;&nbsp;First verify connectivity with the following pings:
+```
+  ping 192.168.100.200
+  ping 8.8.8.8
+```
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the script into an elevated powershell window after adding --insecure to the end of the code
+
+&nbsp;&nbsp;&nbsp;&nbsp;Example script:
+```
+$ProgressPreference = 'SilentlyContinue'
+Invoke-WebRequest -Uri https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.13.4-windows-x86_64.zip -OutFile elastic-agent-8.13.4-windows-x86_64.zip
+Expand-Archive .\elastic-agent-8.13.4-windows-x86_64.zip -DestinationPath .
+cd elastic-agent-8.13.4-windows-x86_64
+.\elastic-agent.exe install --url=https://192.168.100.200:8220 --enrollment-token=REtiRXZZOEJNQ2Z6T09GZzNscDk6UnNSR2JMNG9TVk83dzlGSXdvZkdUdw== --insecure
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Select 'y' to all prompts (should only be asked to run elastic as a service)
+
+&nbsp;&nbsp;&nbsp;&nbsp;On windows client, wait until you see "Successfully enrolled elastic agent, Elastic agent has been successfully installed
+
+&nbsp;&nbsp;&nbsp;&nbsp;In the Kibana GUI wait for: Agent enrolment confirmed, Incoming data confirmed 
+
+&nbsp;&nbsp;&nbsp;&nbsp;(traffic may have to be generated try pinging the Kali machine again)
+
+&nbsp;&nbsp;Verify Endpoint protection is properly configured 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Browse to: Elastic > Integrations > Elastic Defend
+
+&nbsp;&nbsp;&nbsp;&nbsp;Check that the windows client is running
+
+&nbsp;&nbsp;&nbsp;&nbsp;Browse to: Elastic > Fleet > Agents
+
+&nbsp;&nbsp;&nbsp;&nbsp;Check that the Windows client and Windows defend Policy is healthy
+
+&nbsp;&nbsp;&nbsp;&nbsp;Browse to: Elastic > Fleet > Agent Policies > Windows defend policy > edit integration
+
+&nbsp;&nbsp;&nbsp;&nbsp;Make sure Protection level = prevent, and windows events are collected
+
+&nbsp;&nbsp;Check that data is being forwarded to elastic via fleet
+
+&nbsp;&nbsp;&nbsp;&nbsp;Browse to: Elastic > Discover
+
+&nbsp;&nbsp;&nbsp;&nbsp;Filter with "agent.name : ''" to see collected logs
+
+
+&nbsp;&nbsp;If fleet server is unhealthy:
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;If the fleet server is unhealthy restarting it may help:
+```
+  Kali:
+  sudo elastic-agent restart
+
+  Windows:
+  PowerShell: C:\Windows\system32>Stop-Service Elastic Agent
+  PowerShell: C:\Windows\system32>Start-Service Elastic Agent
+```
+
+&nbsp;&nbsp;Incompatible Version
+
+&nbsp;&nbsp;&nbsp;&nbsp;Agents can be enrolled onto a outdated fleet server but logs wont be collected and forwarded to elastic,
+
+&nbsp;&nbsp;&nbsp;&nbsp;To update: Fleet > Agents >Fleet Server Policy - Actions: Upgrade agent
+
+**Configure integration policy for Elastic Defend**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Elastic Security > Manage > Policies - Policy settings
+
+&nbsp;&nbsp;&nbsp;&nbsp;Make sure preventions against:Malware, Ransomware, Memory threats, and malicious behaviour is enabled
+
+&nbsp;&nbsp;&nbsp;&nbsp;Policy settings: Save
+
+**Selecting security rules**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Elastic Security > Alerts - manage rules\
+
+&nbsp;&nbsp;&nbsp;&nbsp;Select all rules
+
+&nbsp;&nbsp;&nbsp;&nbsp;Bulk actions - enable
