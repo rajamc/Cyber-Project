@@ -265,6 +265,19 @@ Objects > Tags > Add: x3
 ```
 ![image](https://github.com/rajamc/Cyber-Project/assets/163961365/22a37583-a54e-4601-9a19-0eaeedd53c7a)
 
+### Create Security profiles then group:
+Objects > Security Profiles <br>
+Clone all predefined security profiles and call them production for: 
+* Antivirus
+* Anti-Spyware
+* Vulnerability Protections
+* URL Filtering
+* File Blocking
+* WildFire Alalysis
+Create a securty profile group that uses all the above profiles by going to Objects > Security Profile Groups.
+
+![image](https://github.com/rajamc/Cyber-Project/assets/163961365/c9c5ab57-8d2e-464f-a654-9186c1390f5f)
+
 
 ### Create NAT Policies
 Policies > Nat > Add: <br>
@@ -308,11 +321,133 @@ Add:<br>
 &nbsp;&nbsp;&nbsp;	Destination Zone: WAN<br>
 &nbsp;&nbsp;&nbsp;	Interface: any<br>
 &nbsp;&nbsp;&nbsp;	Any source address <br>
-&nbsp;&nbsp;&nbsp;	Destination address: 192.168.108.125<br>
+&nbsp;&nbsp;&nbsp;	Destination address: 192.168.108.135<br>
 &nbsp;	\> Translated Packet > Destination Address Translation:<br>
 &nbsp;&nbsp;&nbsp;	Translation Type: Static IP<br>
 &nbsp;&nbsp;&nbsp;	Translated Address: 192.168.50.100<br>
 &nbsp;	\> OK<br>
+
+![image](https://github.com/rajamc/Cyber-Project/assets/163961365/d0f78662-e244-4167-a357-c6768447d5ed)
+
+### Configure Security Policy
+Policies > Security
+* Interzone-default logging:
+  * Interzone-default > Override:
+    * Log Setting > Log at Session End
+    * Log Forwarding: KaliPurpleSIEMProfile
+
+### Create Security Policies:
+Policies > Security > Add<br>
+DMZ-to-Lan
+* General:
+  * Name: DMZ-to-LAN
+  * Description: DMZ connectivity to LAN
+  * Tags: Allow
+* Source:
+  * Source Zone: DMZ Zone
+  * Source Address: 192.168.50.100
+* Destination:
+  * Destination Zone: LAN
+  * Destination Address: 192.168.100.200
+* Actions
+  * Action: Allow
+  * Log Setting > Log at Session End
+  * Log Forwarding: KaliPurpleSIEMProfile
+  * Profile Group: Production Security Profiles
+
+LAN-to-WAN
+* General:
+  * Name: LAN-to-WAN
+  * Description: User PCs to Internet
+  * Tags: Allow
+* Source:
+  * Source Zone: LAN
+* Destination:
+  * Destination Zone: WAN
+* Service:
+  * Service: application-default
+* Actions:
+  * Action: Allow
+  * Log Setting > Log at Session End
+  * Log Forwarding: KaliPurpleSIEMProfile
+  * Profile Group: Production Security Profiles
+
+LAN-to-DMZ
+* General:
+  * Name: LAN-to-DMZ
+  * Description: LAN to access DMZ
+  * Tags: Allow
+* Source:
+  * Source Zone: LAN
+* Destination:
+  * Destination Zone: DMZ Zone
+* Actions:
+  * Action: Allow
+  * Log Setting > Log at Session End
+  * Log Forwarding: KaliPurpleSIEMProfile
+  * Profile Group: Production Security Profiles
+
+DMZ-to-WAN
+* General: 
+  * Name: DMZ-to-WAN
+  * Description: DMZ zone to internet
+  * Tags: Allow
+* Source:
+  * Source Zone: DMZ-Zone
+* Destination:
+  * Destination Zone: WAN
+* Service:
+  * Service: application-default
+* Actions:
+  * Action: Allow
+  * Log Setting > Log at Session End
+  * Log Forwarding: KaliPurpleSIEMProfile
+  * Profile Group: Production Security Profiles
+	
+WAN-to-DMZ:
+* General: 
+  * Name: WAN-to-DMZ
+  * Description: Internet access to DMZ
+  * Tags: Allow
+* Source:
+  * Source Zone: WAN
+* Destination:
+  * Destination Zone: DMZ-Zone
+  * Destination Address: 192.168.108.135
+* Application:
+  * Applications: web-browsing
+* Service:
+  * Service: service-http
+* Actions:
+  * Action: Allow
+  * Log Setting > Log at Session End
+  * Log Forwarding: KaliPurpleSIEMProfile
+  * Profile Group: Production Security Profiles
+
+WAN-to-DMZ-REMOTE-MGT
+* General: 
+  * Name: WAN-to-DMZ-REMOTE-MGT
+  * Description: Remote management for DMZ
+  * Tags: Allow
+* Source:
+  * Source Zone: WAN
+  * Source Address: 192.168.108.16
+* Destination:
+  * Destination Zone: DMZ-Zone
+  * Destination Address: 192.168.108.135
+* Application:
+  * Applications: ms-rdp, mysql, ssh, ssh-tunnel
+* Service:
+  * Service: application-default
+* Actions:
+  * Action: Allow
+  * Log Setting > Log at Session End
+  * Log Forwarding: KaliPurpleSIEMProfile
+  * Profile Group: Production Security Profiles
+
+![image](https://github.com/rajamc/Cyber-Project/assets/163961365/21361a1b-1ceb-43b6-a099-152c6e1f1605)
+
+
 
 
 
