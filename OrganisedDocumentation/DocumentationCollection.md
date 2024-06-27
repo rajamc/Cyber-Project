@@ -447,6 +447,7 @@ WAN-to-DMZ-REMOTE-MGT
 
 ![image](https://github.com/rajamc/Cyber-Project/assets/163961365/21361a1b-1ceb-43b6-a099-152c6e1f1605)
 
+## SIEM Configuration:
 
 
 
